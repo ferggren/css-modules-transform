@@ -148,6 +148,10 @@ export default function transformCssModules({ types: t }) {
         visitor: {
             // import styles from './style.css';
             ImportDefaultSpecifier(path, { file }) {
+				if (path.parentPath.node.type !== 'ImportDeclaration') {
+					return;
+				}
+
                 const { value } = path.parentPath.node.source;
 
                 if (matchExtensions.test(value)) {
